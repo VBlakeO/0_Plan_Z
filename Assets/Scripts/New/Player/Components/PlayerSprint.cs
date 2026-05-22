@@ -12,7 +12,7 @@ namespace PlanZ.Player.Components
     {
         [SerializeField] private MovementConfig config;
 
-        private const float ForwardInputThreshold = 0.1f;
+        private const float MoveDeadZoneSqr = 0.01f;
 
         private PlayerLocomotion _locomotion;
         private PlayerCrouch _crouch;
@@ -46,7 +46,7 @@ namespace PlanZ.Player.Components
             if (!PlayerInput.Instance.SprintHeld) return false;
             if (_crouch.IsCrouched) return false;
             if (config.CancelSprintWhenZoomed && _isZoomed) return false;
-            if (config.RequireForwardInputToSprint && PlayerInput.Instance.MoveAxis.y <= ForwardInputThreshold) return false;
+            if (PlayerInput.Instance.MoveAxis.sqrMagnitude <= MoveDeadZoneSqr) return false;
             return true;
         }
 

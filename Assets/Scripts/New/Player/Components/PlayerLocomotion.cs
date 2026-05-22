@@ -11,14 +11,12 @@ namespace PlanZ.Player.Components
     public class PlayerLocomotion : BaseMovementSystem
     {
         [SerializeField] private MovementConfig config;
-        [SerializeField] private Animator anim;
         [SerializeField] private PlayerStateLocks locks = new();
         [SerializeField] private CharacterController _controller;
 
-        private const string AnimSpeedX = "SpeedX";
-        private const string AnimSpeedY = "SpeedY";
         private const float HalfHeightFactor = 0.5f;
         private const float ZeroVerticalVelocity = 0f;
+        private const float InitialGroundSnapDistance = 5f;
 
         private PlayerGroundCheck _groundCheck;
 
@@ -38,6 +36,11 @@ namespace PlanZ.Player.Components
             Speed = config.WalkSpeed;
         }
 
+        // Snap to ground on Start so the character begins resting on the surface instead of
+        // dropping the first few frames. CharacterController.Move with a large downward delta
+        // resolves against the floor in a single physics step.
+        private void Start() => SnapToGround();
+
         private void OnEnable()
         {
             EventBus.Subscribe<PlayerJumpedEvent>(HandleJumpStarted);
@@ -50,7 +53,16 @@ namespace PlanZ.Player.Components
             EventBus.Unsubscribe<PlayerLandedEvent>(HandleLanded);
         }
 
-        private void FixedUpdate() => Move();
+        // CharacterController.Move resolves collisions immediately and doesn't depend on physics
+        // dynamics, so it runs in Update. This keeps movement in lockstep with the camera (which
+        // also updates per-frame), preventing the visible jitter that appears when one runs at
+        // the FixedUpdate rate and the other at the render rate.
+        private void Update() => Move();
+
+        private void SnapToGround()
+        {
+            _controller.Move(Vector3.down * InitialGroundSnapDistance);
+        }
 
         private void Move()
         {
@@ -73,7 +85,6 @@ namespace PlanZ.Player.Components
             _controller.Move(motion * Time.deltaTime);
 
             ApplySlopeForceIfNeeded(input);
-            UpdateAnimator();
         }
 
         private void ApplySlopeForceIfNeeded(Vector2 input)
@@ -83,13 +94,6 @@ namespace PlanZ.Player.Components
 
             float pushDistance = _controller.height * HalfHeightFactor * config.SlopeForce * Time.deltaTime;
             _controller.Move(Vector3.down * pushDistance);
-        }
-
-        private void UpdateAnimator()
-        {
-            if (anim == null) return;
-            anim.SetFloat(AnimSpeedX, _currentDir.x);
-            anim.SetFloat(AnimSpeedY, _currentDir.y);
         }
 
         public void ApplyJumpImpulse(float force)

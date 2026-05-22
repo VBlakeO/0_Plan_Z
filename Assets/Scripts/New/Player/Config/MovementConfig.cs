@@ -25,16 +25,16 @@ namespace PlanZ.Player.Config
         [Header("Jump")]
         [SerializeField] private float jumpForce = 7f;
         [SerializeField] private float jumpCooldown = 0.3f;
+        [SerializeField] private float jumpAnticipationDelay = 0.15f;
 
         [Header("Sprint")]
-        [SerializeField] private bool requireForwardInputToSprint = true;
         [SerializeField] private bool cancelSprintWhenZoomed = true;
 
         [Header("Crouch")]
         [SerializeField] private float crouchHeight = 0.75f;
         [SerializeField] private float ceilingCheckRadius = 0.5f;
         [SerializeField] private float ceilingCheckDistance = 1.5f;
-        [SerializeField] private float crouchExitDownNudge = 0.01f;
+        [SerializeField] private float crouchTransitionSpeed = 4f;
 
         [Header("Camera")]
         [SerializeField, Range(0.1f, 10f)] private float mouseSensitivity = 2f;
@@ -68,6 +68,12 @@ namespace PlanZ.Player.Config
         [SerializeField] private Vector2 spineMiddleAngleLimits = new(-10f, 30f);
         [SerializeField] private Vector2 spineLowerAngleLimits = new(-5f, 20f);
 
+        [Header("Animation - Locomotion Speed Multipliers")]
+        [SerializeField, Range(0.1f, 3f)] private float walkAnimationSpeed = 1f;
+        [SerializeField, Range(0.1f, 3f)] private float sprintAnimationSpeed = 1.5f;
+        [SerializeField, Range(0.1f, 3f)] private float crouchAnimationSpeed = 0.7f;
+        [SerializeField] private float animationSpeedSmoothing = 8f;
+
         public float WalkSpeed => walkSpeed;
         public float SprintSpeed => sprintSpeed;
         public float CrouchSpeedMultiplier => crouchSpeedMultiplier;
@@ -84,14 +90,14 @@ namespace PlanZ.Player.Config
 
         public float JumpForce => jumpForce;
         public float JumpCooldown => jumpCooldown;
+        public float JumpAnticipationDelay => jumpAnticipationDelay;
 
-        public bool RequireForwardInputToSprint => requireForwardInputToSprint;
         public bool CancelSprintWhenZoomed => cancelSprintWhenZoomed;
 
         public float CrouchHeight => crouchHeight;
         public float CeilingCheckRadius => ceilingCheckRadius;
         public float CeilingCheckDistance => ceilingCheckDistance;
-        public float CrouchExitDownNudge => crouchExitDownNudge;
+        public float CrouchTransitionSpeed => crouchTransitionSpeed;
 
         public float MouseSensitivity => mouseSensitivity;
         public bool InvertCamera => invertCamera;
@@ -118,6 +124,11 @@ namespace PlanZ.Player.Config
         public Vector2 SpineUpperAngleLimits => spineUpperAngleLimits;
         public Vector2 SpineMiddleAngleLimits => spineMiddleAngleLimits;
         public Vector2 SpineLowerAngleLimits => spineLowerAngleLimits;
+
+        public float WalkAnimationSpeed => walkAnimationSpeed;
+        public float SprintAnimationSpeed => sprintAnimationSpeed;
+        public float CrouchAnimationSpeed => crouchAnimationSpeed;
+        public float AnimationSpeedSmoothing => animationSpeedSmoothing;
     }
 
     public enum SpineBoneAxis

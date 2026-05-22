@@ -11,9 +11,16 @@ namespace PlanZ.Player.Components
     {
         [SerializeField] private MovementConfig config;
 
+        private const float HalfHeight = 0.5f;
+        private const float HeightSnapEpsilon = 0.001f;
+
         private PlayerLocomotion _locomotion;
         private CharacterController _controller;
-        private float _originalHeight;
+
+        private float _standingHeight;
+        private Vector3 _standingCenter;
+        private float _targetHeight;
+        private bool _hasPublishedState;
 
         public bool IsCrouched { get; private set; }
 
@@ -21,34 +28,65 @@ namespace PlanZ.Player.Components
         {
             _locomotion = GetComponent<PlayerLocomotion>();
             _controller = _locomotion.Controller;
-            _originalHeight = _controller.height;
+            _standingHeight = _controller.height;
+            _standingCenter = _controller.center;
+            _targetHeight = _standingHeight;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             if (_locomotion.Locks.CantCrouch) return;
 
+            ResolveDesiredState();
+            InterpolateHeight();
+        }
+
+        // Splits intent from execution: ResolveDesiredState only flips IsCrouched and publishes the
+        // state event; InterpolateHeight runs every frame to smoothly animate the controller's
+        // dimensions toward the current target.
+        private void ResolveDesiredState()
+        {
             bool wantsToCrouch = PlayerInput.Instance.CrouchHeld;
 
             if (wantsToCrouch && !IsCrouched)
-                EnterCrouch();
-            else if (!wantsToCrouch && IsCrouched && !HasCeilingAbove())
-                ExitCrouch();
+            {
+                IsCrouched = true;
+                _targetHeight = config.CrouchHeight;
+                EventBus.Publish(new PlayerCrouchStateChangedEvent(true));
+                return;
+            }
+
+            if (!wantsToCrouch && IsCrouched && !HasCeilingAbove())
+            {
+                IsCrouched = false;
+                _targetHeight = _standingHeight;
+                EventBus.Publish(new PlayerCrouchStateChangedEvent(false));
+            }
         }
 
-        private void EnterCrouch()
+        private void InterpolateHeight()
         {
-            _controller.height = config.CrouchHeight;
-            IsCrouched = true;
-            EventBus.Publish(new PlayerCrouchStateChangedEvent(true));
+            if (Mathf.Approximately(_controller.height, _targetHeight)) return;
+
+            float newHeight = Mathf.MoveTowards(_controller.height, _targetHeight,
+                config.CrouchTransitionSpeed * Time.deltaTime);
+
+            ApplyHeight(newHeight);
+
+            if (Mathf.Abs(newHeight - _targetHeight) < HeightSnapEpsilon)
+                ApplyHeight(_targetHeight);
         }
 
-        private void ExitCrouch()
+        // Adjusts both height and center so the bottom of the capsule stays at the same world
+        // position. Without compensating the center, lowering the height makes the capsule shrink
+        // around its middle (head and feet pull together) instead of "ducking down".
+        private void ApplyHeight(float height)
         {
-            _controller.height = _originalHeight;
-            _controller.Move(Vector3.down * config.CrouchExitDownNudge);
-            IsCrouched = false;
-            EventBus.Publish(new PlayerCrouchStateChangedEvent(false));
+            float standingBottomOffset = _standingCenter.y - _standingHeight * HalfHeight;
+            float newCenterY = standingBottomOffset + height * HalfHeight;
+
+            _controller.height = height;
+            _controller.center = new Vector3(_standingCenter.x, newCenterY, _standingCenter.z);
         }
 
         private bool HasCeilingAbove()

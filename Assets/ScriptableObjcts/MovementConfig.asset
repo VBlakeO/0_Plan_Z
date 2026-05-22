@@ -17,9 +17,9 @@ MonoBehaviour:
   crouchSpeedMultiplier: 0.5
   moveSmoothTime: 0.3
   gravity: -13
-  groundCheckRange: 0.75
-  crouchGroundCheckRange: 0.75
-  groundCheckRadius: 0.5
+  groundCheckRange: 0.38
+  crouchGroundCheckRange: 0.38
+  groundCheckRadius: 0.3
   groundLayers:
     serializedVersion: 2
     m_Bits: 129
@@ -27,13 +27,13 @@ MonoBehaviour:
   slopeRayLength: 2
   jumpForce: 7
   jumpCooldown: 0.3
-  requireForwardInputToSprint: 1
+  jumpAnticipationDelay: 0.2
   cancelSprintWhenZoomed: 1
-  crouchHeight: 0.75
+  crouchHeight: 1.2
   ceilingCheckRadius: 0.5
   ceilingCheckDistance: 1.5
-  crouchExitDownNudge: 0.01
-  mouseSensitivity: 2
+  crouchTransitionSpeed: 3
+  mouseSensitivity: 4.68
   invertCamera: 0
   pitchLimits: {x: -60, y: 60}
   initialFOV: 90
@@ -53,3 +53,7 @@ MonoBehaviour:
   spineUpperAngleLimits: {x: -25, y: 35}
   spineMiddleAngleLimits: {x: -15, y: 30}
   spineLowerAngleLimits: {x: -5, y: 20}
+  walkAnimationSpeed: 1
+  sprintAnimationSpeed: 1.5
+  crouchAnimationSpeed: 0.7
+  animationSpeedSmoothing: 8

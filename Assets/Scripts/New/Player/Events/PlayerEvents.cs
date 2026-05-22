@@ -23,6 +23,8 @@ namespace PlanZ.Player.Events
 
     public readonly struct PlayerJumpRequestedEvent : IEvent { }
 
+    public readonly struct PlayerJumpStartedEvent : IEvent { }
+
     public readonly struct PlayerCrouchStateChangedEvent : IEvent
     {
         public bool IsCrouched { get; }
