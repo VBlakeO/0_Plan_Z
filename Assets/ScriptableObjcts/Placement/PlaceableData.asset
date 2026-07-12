@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e06063db0aa0a4cbd8f2d66c978ac5, type: 3}
+  m_Name: PlaceableData
+  m_EditorClassIdentifier: 
+  displayName: Spikes
+  placedPrefab: {fileID: 6869521964461433652, guid: ca555c20e062fae488c06aa8dc0bc3ec,
+    type: 3}
+  ghostMesh: {fileID: -1291710161511281072, guid: 90f5437db8f3c554180b7287b8b08541,
+    type: 3}
+  ghostScale: {x: 1, y: 1, z: 1}
+  colliderSize: {x: 1, y: 1, z: 1}
+  heightOffset: 0
+  surfaceLayers:
+    serializedVersion: 2
+    m_Bits: 128
+  maxRange: 4
+  snapAngle: 45

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c45a7d00682f664d856a38b911b3c49, type: 3}
+  m_Name: MovementConfig
+  m_EditorClassIdentifier: 
+  walkSpeed: 3
+  sprintSpeed: 6
+  crouchSpeedMultiplier: 0.5
+  moveSmoothTime: 0.3
+  gravity: -13
+  groundCheckRange: 0.36
+  crouchGroundCheckRange: 0.38
+  groundCheckRadius: 0.3
+  groundLayers:
+    serializedVersion: 2
+    m_Bits: 129
+  slopeForce: 2
+  slopeRayLength: 1
+  jumpForce: 7
+  jumpCooldown: 0.3
+  jumpAnticipationDelay: 0.05
+  airControlMultiplier: 0.6
+  coyoteTime: 0.15
+  cancelSprintWhenZoomed: 1
+  crouchHeight: 1.2
+  ceilingCheckRadius: 0.5
+  ceilingCheckDistance: 1.5
+  crouchTransitionSpeed: 3
+  mouseSensitivity: 3
+  invertCamera: 0
+  pitchLimits: {x: -70, y: 70}
+  initialFOV: 90
+  zoomFOV: 30
+  sprintFOV: 100
+  fovLerpSpeed: 5
+  spineIKEnabled: 1
+  spineUpperAxis: 2
+  spineMiddleAxis: 2
+  spineLowerAxis: 2
+  spineUpperSign: 1
+  spineMiddleSign: 1
+  spineLowerSign: 1
+  spineUpperWeight: 0.49
+  spineMiddleWeight: 0.3
+  spineLowerWeight: 1
+  spineUpperAngleLimits: {x: -25, y: 35}
+  spineMiddleAngleLimits: {x: -15, y: 30}
+  spineLowerAngleLimits: {x: -5, y: 20}
+  walkAnimationSpeed: 1
+  sprintAnimationSpeed: 1.5
+  crouchAnimationSpeed: 0.7
+  animationSpeedSmoothing: 8

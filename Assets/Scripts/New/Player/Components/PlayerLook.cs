@@ -55,11 +55,18 @@ namespace PlanZ.Player.Components
         {
             if (_locomotion.Locks.CantLook) return;
 
-            _yaw += (evt.Delta.x + HorizontalRecoil) * config.MouseSensitivity;
+            _yaw += evt.Delta.x * config.MouseSensitivity + HorizontalRecoil;
 
-            float pitchDelta = config.MouseSensitivity * (evt.Delta.y + VerticalRecoil);
+            float pitchDelta = config.MouseSensitivity * evt.Delta.y;
             _pitch += config.InvertCamera ? pitchDelta : -pitchDelta;
+            _pitch -= VerticalRecoil;
             _pitch = Mathf.Clamp(_pitch, config.PitchLimits.x, config.PitchLimits.y);
+
+            // Recoil values are applied once per frame here, then zeroed by WeaponRecoil before
+            // the next frame's delta. This makes them act as one-shot impulses rather than
+            // continuously held forces.
+            HorizontalRecoil = 0f;
+            VerticalRecoil = 0f;
 
             transform.localEulerAngles = new Vector3(YawAxisLock, _yaw, YawAxisLock);
         }

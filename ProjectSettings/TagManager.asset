@@ -15,8 +15,8 @@ TagManager:
   - Tracer
   - Ground
   - Obstacle
-  - 
-  - 
+  - Interactable
+  - Placeable
   - 
   - 
   - 

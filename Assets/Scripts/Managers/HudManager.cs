@@ -2,6 +2,7 @@ using UnityEngine.UI;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using PlanZ.Weapons.Data;
 
 public class HudManager : MonoBehaviour
 {
@@ -76,9 +77,9 @@ public class HudManager : MonoBehaviour
 
     public void SetCrosshairStyle(CrosshairData Data)
     {
-        CrosshairImage.sprite = Data.CrosshairSprite;
-        CrosshairImage.color = Data.CrosshairColor;
-        CrosshairImage.transform.localScale = new Vector3(Data.CrosshairSize, Data.CrosshairSize, Data.CrosshairSize);
+        // CrosshairImage.sprite = Data.CrosshairSprite;
+        // CrosshairImage.color = Data.CrosshairColor;
+        // CrosshairImage.transform.localScale = new Vector3(Data.CrosshairSize, Data.CrosshairSize, Data.CrosshairSize);
     }
 
     public void SetWeaponIcon(Sprite _weaponIcon)

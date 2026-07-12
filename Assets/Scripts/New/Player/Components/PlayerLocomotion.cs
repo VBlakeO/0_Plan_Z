@@ -12,7 +12,7 @@ namespace PlanZ.Player.Components
     {
         [SerializeField] private MovementConfig config;
         [SerializeField] private PlayerStateLocks locks = new();
-        [SerializeField] private CharacterController _controller;
+        [SerializeField]  private CharacterController _controller;
 
         private const float HalfHeightFactor = 0.5f;
         private const float ZeroVerticalVelocity = 0f;
@@ -22,6 +22,8 @@ namespace PlanZ.Player.Components
 
         private Vector2 _currentDir;
         private Vector2 _currentDirVelocity;
+        private Vector2 _airSnapshotDir;
+        private bool _wasGrounded = true;
         private float _verticalVelocity;
         private bool _isJumping;
 
@@ -36,9 +38,6 @@ namespace PlanZ.Player.Components
             Speed = config.WalkSpeed;
         }
 
-        // Snap to ground on Start so the character begins resting on the surface instead of
-        // dropping the first few frames. CharacterController.Move with a large downward delta
-        // resolves against the floor in a single physics step.
         private void Start() => SnapToGround();
 
         private void OnEnable()
@@ -53,10 +52,6 @@ namespace PlanZ.Player.Components
             EventBus.Unsubscribe<PlayerLandedEvent>(HandleLanded);
         }
 
-        // CharacterController.Move resolves collisions immediately and doesn't depend on physics
-        // dynamics, so it runs in Update. This keeps movement in lockstep with the camera (which
-        // also updates per-frame), preventing the visible jitter that appears when one runs at
-        // the FixedUpdate rate and the other at the render rate.
         private void Update() => Move();
 
         private void SnapToGround()
@@ -75,9 +70,12 @@ namespace PlanZ.Player.Components
             }
 
             Vector2 input = PlayerInput.Instance.MoveAxis.normalized;
-            _currentDir = Vector2.SmoothDamp(_currentDir, input, ref _currentDirVelocity, config.MoveSmoothTime);
+            bool isGrounded = _groundCheck.IsGrounded;
 
-            if (_groundCheck.IsGrounded && !_isJumping)
+            UpdateAirSnapshot(isGrounded);
+            UpdateHorizontalDirection(input, isGrounded);
+
+            if (isGrounded && !_isJumping)
                 _verticalVelocity = ZeroVerticalVelocity;
 
             Vector3 horizontal = (transform.forward * _currentDir.y + transform.right * _currentDir.x) * (Speed * SlowMultiplier);
@@ -85,6 +83,34 @@ namespace PlanZ.Player.Components
             _controller.Move(motion * Time.deltaTime);
 
             ApplySlopeForceIfNeeded(input);
+        }
+
+        // The snapshot freezes the direction the player had at the instant they left the ground.
+        // This is what makes air control "partial": the snapshot keeps existing momentum, while
+        // current input only pulls the effective direction toward it by AirControlMultiplier.
+        // Without the snapshot, releasing WASD mid-jump would zero out horizontal velocity.
+        private void UpdateAirSnapshot(bool isGrounded)
+        {
+            if (_wasGrounded && !isGrounded)
+                _airSnapshotDir = _currentDir;
+
+            _wasGrounded = isGrounded;
+        }
+
+        // Ground: smooth toward input (existing inertia behaviour).
+        // Air: blend snapshot toward input by the configured multiplier. With multiplier 0 the
+        // player keeps strictly the snapshot direction; with 1 the player has full air control
+        // (equivalent to the original behaviour). 0.3 is a common middle ground.
+        private void UpdateHorizontalDirection(Vector2 input, bool isGrounded)
+        {
+            if (isGrounded)
+            {
+                _currentDir = Vector2.SmoothDamp(_currentDir, input, ref _currentDirVelocity,
+                    config.MoveSmoothTime);
+                return;
+            }
+
+            _currentDir = Vector2.Lerp(_airSnapshotDir, input, config.AirControlMultiplier);
         }
 
         private void ApplySlopeForceIfNeeded(Vector2 input)
@@ -100,6 +126,10 @@ namespace PlanZ.Player.Components
         {
             _verticalVelocity = force;
             _isJumping = true;
+
+            // The jump itself starts a new air phase; capture the current direction now so the
+            // ground frame doesn't have a chance to smoothdamp it back to input first.
+            _airSnapshotDir = _currentDir;
         }
 
         private void HandleJumpStarted() { /* reserved for animation hooks */ }

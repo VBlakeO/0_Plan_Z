@@ -26,6 +26,8 @@ namespace PlanZ.Player.Config
         [SerializeField] private float jumpForce = 7f;
         [SerializeField] private float jumpCooldown = 0.3f;
         [SerializeField] private float jumpAnticipationDelay = 0.15f;
+        [SerializeField, Range(0f, 1f)] private float airControlMultiplier = 0.3f;
+        [SerializeField] private float coyoteTime = 0.15f;
 
         [Header("Sprint")]
         [SerializeField] private bool cancelSprintWhenZoomed = true;
@@ -91,6 +93,8 @@ namespace PlanZ.Player.Config
         public float JumpForce => jumpForce;
         public float JumpCooldown => jumpCooldown;
         public float JumpAnticipationDelay => jumpAnticipationDelay;
+        public float AirControlMultiplier => airControlMultiplier;
+        public float CoyoteTime => coyoteTime;
 
         public bool CancelSprintWhenZoomed => cancelSprintWhenZoomed;
 
@@ -130,7 +134,7 @@ namespace PlanZ.Player.Config
         public float CrouchAnimationSpeed => crouchAnimationSpeed;
         public float AnimationSpeedSmoothing => animationSpeedSmoothing;
     }
-
+    
     public enum SpineBoneAxis
     {
         X,

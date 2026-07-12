@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using PlanZ.Weapons.Data;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class PlayerInventory : MonoBehaviour
 {
-    [SerializeField] private WeaponManager weaponManager = null;
+    //[SerializeField] private WeaponManager weaponManager = null;
     [SerializeField] private PlaceObject placeObject = null;
     [Space]
 
@@ -60,19 +61,19 @@ public class PlayerInventory : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             placeObject.EquipObject(false);
-            weaponManager.ChangeWeapon(0);
+            //weaponManager.ChangeWeapon(0);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             placeObject.EquipObject(false);
-            weaponManager.ChangeWeapon(1);
+            //weaponManager.ChangeWeapon(1);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             placeObject.EquipObject(false);
-            weaponManager.ChangeWeapon(2);
+            //weaponManager.ChangeWeapon(2);
         }
 
         //////

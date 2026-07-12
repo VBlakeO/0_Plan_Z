@@ -8,6 +8,7 @@ namespace PlanZ.Player.Components
 {
     [RequireComponent(typeof(PlayerLocomotion))]
     [RequireComponent(typeof(PlayerCrouch))]
+    [RequireComponent(typeof(PlayerGroundCheck))]
     public class PlayerSprint : MonoBehaviour
     {
         [SerializeField] private MovementConfig config;
@@ -16,6 +17,7 @@ namespace PlanZ.Player.Components
 
         private PlayerLocomotion _locomotion;
         private PlayerCrouch _crouch;
+        private PlayerGroundCheck _groundCheck;
         private bool _isZoomed;
 
         public bool IsSprinting { get; private set; }
@@ -24,14 +26,21 @@ namespace PlanZ.Player.Components
         {
             _locomotion = GetComponent<PlayerLocomotion>();
             _crouch = GetComponent<PlayerCrouch>();
+            _groundCheck = GetComponent<PlayerGroundCheck>();
         }
 
         private void OnEnable() => EventBus.Subscribe<PlayerZoomStateChangedEvent>(HandleZoomChanged);
 
         private void OnDisable() => EventBus.Unsubscribe<PlayerZoomStateChangedEvent>(HandleZoomChanged);
 
+        // Sprint state is locked while the player is airborne: the decision to start or stop
+        // sprinting can only be made with feet on the ground. This prevents the player from
+        // changing horizontal speed mid-jump by toggling Shift, which would otherwise let them
+        // "boost" their air movement after the fact.
         private void Update()
         {
+            if (!_groundCheck.IsGrounded) return;
+
             bool shouldSprint = ResolveShouldSprint();
             if (shouldSprint == IsSprinting) return;
 

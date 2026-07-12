@@ -1,3 +1,4 @@
+using PlanZ.Combat.Damage;
 using UnityEngine;
 
 public class BaseLivingBeing : MonoBehaviour, IDamageable
@@ -55,5 +56,10 @@ public class BaseLivingBeing : MonoBehaviour, IDamageable
     public bool IsInjured()
     {
         return currentLife > 0 && currentLife < maxLife;
+    }
+
+    public void ApplyDamage(DamageInfo info)
+    {
+        throw new System.NotImplementedException();
     }
 }

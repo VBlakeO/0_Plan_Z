@@ -78,7 +78,7 @@ Material:
     m_Floats:
     - _Blood: 1
     - _Metallic: 0
-    - _NoiseForce: 0
+    - _NoiseForce: 0.999
     - _NoiseScale: 1
     - _NormalStenght: 1
     - _QueueControl: 0

@@ -10,7 +10,7 @@ public class PlaceObject : MonoBehaviour
     [SerializeField] private LayerMask attainableLayers = 1;
     [Space]
 
-    [SerializeField] private WeaponManager weaponManager = null;
+    //[SerializeField] private WeaponManager weaponManager = null;
     [SerializeField] private PlayerInventory inventory = null;
     [Space]
 
@@ -48,10 +48,10 @@ public class PlaceObject : MonoBehaviour
     {
         equiped = equip;
 
-        if (equip)
-            weaponManager.LockAllWeapoms();
-        else
-            weaponManager.UnlockAllWeapoms();
+        // if (equip)
+        //     weaponManager.LockAllWeapoms();
+        // else
+        //     weaponManager.UnlockAllWeapoms();
     }
 
     public void SelectObject(int item)

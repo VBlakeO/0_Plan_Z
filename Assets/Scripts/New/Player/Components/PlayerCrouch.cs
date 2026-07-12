@@ -10,6 +10,8 @@ namespace PlanZ.Player.Components
     public class PlayerCrouch : MonoBehaviour
     {
         [SerializeField] private MovementConfig config;
+        [SerializeField] private Animator anim;
+
 
         private const float HalfHeight = 0.5f;
         private const float HeightSnapEpsilon = 0.001f;
@@ -37,8 +39,11 @@ namespace PlanZ.Player.Components
         {
             if (_locomotion.Locks.CantCrouch) return;
 
+            anim.SetBool("IsCrouch", IsCrouched);
+
             ResolveDesiredState();
             InterpolateHeight();
+
         }
 
         // Splits intent from execution: ResolveDesiredState only flips IsCrouched and publishes the

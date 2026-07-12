@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc910252974e5544aaf14ea101288690, type: 3}
+  m_Name: RifleWeaponData
+  m_EditorClassIdentifier: 
+  displayName: Rifle
+  icon: {fileID: 21300044, guid: 6674e8c43c63e4f4184cbd009379498d, type: 3}
+  damage: 30
+  range: 120
+  hitLayers:
+    serializedVersion: 2
+    m_Bits: 503
+  shotType: 1
+  fireRate: 0.15
+  ammoType: 1
+  magazineCapacity: 30
+  reloadDuration: 2.5
+  autoReloadOnEmpty: 1
+  recoilPattern: {fileID: 11400000, guid: 0851f88c4edfa3d449798aa74408e8dc, type: 2}
+  recoilIntensity: 1
+  recoilRiseSpeed: 18
+  recoilDecaySpeed: 6
+  recoilResetDelay: 0.2
+  aimedRecoilMultiplier: 0.7
+  aimedFOV: 55
+  hipFOV: 60
+  aimLerpSpeed: 2
+  equipDuration: 0.9
+  defaultCrosshair: {fileID: 11400000, guid: a1549a07bc6d02d4ba820531dee5c66c, type: 2}
+  aimingCrosshair: {fileID: 11400000, guid: 5f923c8151edd6e45be4eff5a11018d6, type: 2}
+  audioData: {fileID: 11400000, guid: b0d3a5dbf9a954141bc4791f1f7f0814, type: 2}
+  decalPoolId: Pistol_Decal
+  tracerPoolId: Pistol_Tracer

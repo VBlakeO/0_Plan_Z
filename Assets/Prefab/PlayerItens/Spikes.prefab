@@ -80,7 +80,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 90f5437db8f3c554180b7287b8b08541,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 2986182bfb198df47a54770da4d86bdb, type: 2}
     - target: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
@@ -88,14 +88,15 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spikes
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
+        type: 3}
+      propertyPath: m_Layer
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2287388305313053092}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
         type: 3}
       insertIndex: -1
@@ -107,15 +108,7 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
         type: 3}
       insertIndex: -1
-      addedObject: {fileID: 981909817060055999}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2177195646151702386}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 90f5437db8f3c554180b7287b8b08541,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3517134997284008381}
+      addedObject: {fileID: 6683703011961609314}
   m_SourcePrefab: {fileID: 100100000, guid: 90f5437db8f3c554180b7287b8b08541, type: 3}
 --- !u!1 &6869521964461433652 stripped
 GameObject:
@@ -123,20 +116,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 6022465013342183013}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2287388305313053092
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6869521964461433652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cd54f165857c24428967f940b1a4df9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxLife: 100
-  currentLife: 0
 --- !u!54 &2456243185792986281
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -184,8 +163,8 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.4995332, y: 1.0474454, z: 1.0564871}
-  m_Center: {x: -0.00022086501, y: -0.0053980644, z: 0.5254402}
---- !u!114 &981909817060055999
+  m_Center: {x: 0, y: 0.52, z: 0}
+--- !u!114 &6683703011961609314
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -194,39 +173,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 6869521964461433652}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3b2e66f0a06a5af44a89ddb0a4a1f873, type: 3}
+  m_Script: {fileID: 11500000, guid: 52a2e75d9de53a04c97b6d26cbe27be8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageType: 0
-  healing: 0
-  damage: 10
-  delayBetweenDamage: 1
-  livingBeings: []
---- !u!114 &2177195646151702386
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6869521964461433652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5cf21ba661c3fec4c9992942d98b27d5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  temporary: 0
-  duration: 3
-  intensity: 0.4
-  movementSystem: {fileID: 0}
---- !u!114 &3517134997284008381
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6869521964461433652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f0408c61c1acfc49b7866ff079e4540, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  damagePerTick: 3
+  tickInterval: 0.5
+  slowMultiplier: 0.3
+  affectedLayers:
+    serializedVersion: 2
+    m_Bits: 574
