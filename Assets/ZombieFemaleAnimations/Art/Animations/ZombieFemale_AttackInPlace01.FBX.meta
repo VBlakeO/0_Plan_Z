@@ -1,5 +1,12 @@
 fileFormatVersion: 2
 guid: a2693b3369a9bb24baed1ec747eef494
+AssetOrigin:
+  serializedVersion: 1
+  productId: 338096
+  packageName: Female Zombie Animations
+  packageVersion: 1.0
+  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/ZombieFemale_AttackInPlace01.FBX
+  uploadId: 803404
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -15,15 +22,13 @@ ModelImporter:
     resampleCurves: 1
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
-    motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
+    motionNodeName: Root
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
+    importConstraints: 1
     animationCompression: 3
     animationRotationError: 0.5
     animationPositionError: 0.5
@@ -43,7 +48,7 @@ ModelImporter:
       level: 0
       cycleOffset: 0
       loop: 0
-      hasAdditiveReferencePose: 0
+      hasAdditiveReferencePose: 1
       loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
@@ -1347,10 +1352,3 @@ ModelImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
-AssetOrigin:
-  serializedVersion: 1
-  productId: 338096
-  packageName: Female Zombie Animations
-  packageVersion: 1.0
-  assetPath: Assets/ZombieFemaleAnimations/Art/Animations/ZombieFemale_AttackInPlace01.FBX
-  uploadId: 803404

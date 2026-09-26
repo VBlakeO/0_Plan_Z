@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using PlanZ.AI.Zombies.Components;
 using PlanZ.Combat.Damage;
+using System.Collections;
 
 namespace PlanZ.AI.Zombies.Targets
 {
@@ -29,21 +30,15 @@ namespace PlanZ.AI.Zombies.Targets
             if (ownerZombie == null) ownerZombie = GetComponentInParent<ZombieAI>();
         }
 
-        // Called by animation events on the attack clip. Toggling the Collider (not the whole
-        // GameObject) is critical: a disabled GameObject stops receiving animation events, so
-        // SetActive(false) between swings would prevent the next EnableHitbox call from ever
-        // firing. Only the collider needs to go on/off - the component stays alive to hear the
-        // next event.
-        public void EnableHitbox()
+        private void OnEnable() 
         {
             _hitThisSwing.Clear();
-            if (_collider != null) _collider.enabled = true;
         }
 
-        public void DisableHitbox()
-        {
-            if (_collider != null) _collider.enabled = false;
+        private void OnDisable() {
+            _hitThisSwing.Clear();
         }
+
 
         private void OnTriggerEnter(Collider other)
         {
